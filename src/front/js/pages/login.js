@@ -24,11 +24,12 @@ export const Login = () => {
 
 
             const response = await fetch(process.env.BACKEND_URL + "/login", {
-                method: "GET",
+                method: "POST",
                 headers: {
-                    "Content-Type": "application/json",
+                  "Content-Type": "application/json",
                 },
-            });
+                body: JSON.stringify({ email, password }),
+              });
 
             if (response.ok) {
                 setLoginSuccess(true);

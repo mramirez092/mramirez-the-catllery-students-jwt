@@ -12,14 +12,26 @@ from flask_jwt_extended import jwt_required
 api = Blueprint('api', __name__)
 
 
+
+@api.route('/signup', methods=['GET'])
+def get_users():
+    allUsers = User.query.all()
+    result = [element.serialize() for element in allUsers]
+    return jsonify(result), 200
+
 @api.route("/signup", methods=["POST"])
 def sign_up():
     # Ejercicio 2. Completar! Debemos obtener el usuario y password del cuerpo del a petición POST. Luego, añadir el usuario a la base de datos. Puedes comprobar si se ha creado bien el usuario en la pantalla de administración de Flask, o haciendo una consulta a la tabla User. Solo hay que cambiar este método, no toques la URL de la ruta ni añadas el decorador @jwt_required()
+    data = request.get_json()
 
+    user = User(email=data['email'], password=data['password'])
+
+    db.session.add(user)
+    db.session.commit()
     # BONUS: ¿Cómo gestionamos si el usuario ha puesto un email ya presente en la tabla User? Implementa el BONUS cuando acabes todos los ejercicios
 
     # Este return debe cambiarse adecuadamente para devolver un mensaje de OK cuando el usuario se haya creado
-    return jsonify({"msg": "Not implemented"}), 501
+    return jsonify({"msg": "User added succesfully"}), 200
 
 
 @api.route('/login', methods=['POST'])
