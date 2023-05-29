@@ -23,10 +23,11 @@ export const Login = () => {
             console.log("password a enviar: ", password)
 
 
-            const response = await fetch(process.env.BACKEND_URL + "/login", {
+            const response = await fetch(process.env.BACKEND_URL + "/api/login", {
                 method: "POST",
                 headers: {
-                  "Content-Type": "application/json",
+                    "Content-Type": "application/json",
+                    Authorization: 'Bearer ' + localStorage.getItem("miTokenJWT")
                 },
                 body: JSON.stringify({ email, password }),
               });

@@ -69,6 +69,7 @@ def post_cat():
     # Obtén los datos del gato del cuerpo de la solicitud
     data = request.json
     print(data)
+    
     name = data.get("name")
     image_url = data.get("imageUrl")
 
